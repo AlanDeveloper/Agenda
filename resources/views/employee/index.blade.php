@@ -4,13 +4,11 @@
 <a href="{{ route('employee.store') }}">
     <button>Register</button>
 </a>
-@if (session('status'))
-    <p>{{ session('status') }}</p>
-@endif
 <table>
     <thead>
         <tr>
-            <th>Nome</th>
+            <th>Name</th>
+            <th>Company</th>
             <th></th>
             <th></th>
         </tr>
@@ -19,6 +17,7 @@
         @foreach ($employee as $e)
         <tr>
             <td>{{ $e->name }}</td>
+            <td>{{ $e->company_name }}</td>
             <td><a href="{{ route('employee.update', $e->id) }}">Update</a></td>
             <td>
                 <form action="{{ route('employee.delete', $e->id) }}" method="post">

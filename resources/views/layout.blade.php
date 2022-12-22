@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/jquery.toast.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     <title>Agenda</title>
 </head>
@@ -26,6 +27,17 @@
     </footer>
     <script src="{{ asset('js/fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.toast.min.js') }}"></script>
     <script src="{{ asset('js/app.min.js') }}"></script>
+    @if (session('status'))
+    <script>
+        $.toast({
+            heading: '{{ session('header') }}',
+            text: '{{ session('message') }}',
+            icon: '{{ session('status') }}',
+            loader: true,        // Change it to false to disable loader
+        })
+    </script>
+    @endif
 </body>
 </html>

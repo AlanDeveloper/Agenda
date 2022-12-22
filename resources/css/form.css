@@ -13,7 +13,7 @@ form#formCreateOrUpdate > div {
     margin-bottom: 10px;
 }
 
-form#formCreateOrUpdate input, select {
+form#formCreateOrUpdate input, select, textarea {
     width: 100%;
     padding: 5px;
 }
@@ -23,4 +23,5 @@ form#formCreateOrUpdate input[type="submit"] {
     background-color: #1b1717;
     color: #fff;
     border-radius: 5px;
+    cursor: pointer;
 }

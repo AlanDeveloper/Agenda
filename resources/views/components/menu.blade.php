@@ -19,6 +19,18 @@
                     <span>Employee</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('type_solicitation.index') }}" @if (URL::full() == route('type_solicitation.index')) class="active" @endif>
+                    <span class="icon"><i class="tes te-type_solicitation"></i></span>
+                    <span>Type Solicitation</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('solicitation.index') }}" @if (URL::full() == route('solicitation.index')) class="active" @endif>
+                    <span class="icon"><i class="tes te-solicitation"></i></span>
+                    <span>Solicitation</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </section>

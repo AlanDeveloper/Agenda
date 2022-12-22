@@ -38,9 +38,16 @@ class CompanyController extends Controller
             }
         } catch (\Exception $e) {
             Company::createLog('company', $e->getMessage(), $method, 'error');
-            return redirect()->back()->with('error', 'Failed updated with message "' . $e->getMessage() . '"')->withInput();
+            return redirect()->back()
+                ->with('header', 'Error')
+                ->with('message', 'Failed ' . ($method == 'POST' ? 'created' : 'updated') . ' with message "' . $e->getMessage() . '"')
+                ->with('status', 'error')
+                ->withInput();
         }
-        return redirect()->route('company.index')->with('status', 'Successfully updated');
+        return redirect()->route('company.index')
+            ->with('header', 'Success')
+            ->with('message', 'Successfully ' . ($method == 'POST' ? 'created' : 'updated'))
+            ->with('status', 'success');
     }
 
     public function delete($id)
@@ -50,8 +57,14 @@ class CompanyController extends Controller
             Company::where('id', $id)->delete();
         } catch (\Exception $e) {
             Company::createLog('company', $e->getMessage(), 'DELETE', 'error');
-            return redirect()->back()->with('error', 'Failed deleted with message "' . $e->getMessage() . '"');
+            return redirect()->back()
+                ->with('header', 'Error')
+                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('status', 'error');
         }
-        return redirect()->route('company.index')->with('status', 'Successfully deleted');
+        return redirect()->route('company.index')
+            ->with('header', 'Success')
+            ->with('message', 'Successfully deleted')
+            ->with('status', 'success');
     }
 }

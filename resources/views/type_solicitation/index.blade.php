@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-<a href="{{ route('company.store') }}">
+<a href="{{ route('type_solicitation.store') }}">
     <button>Register</button>
 </a>
 <table>
@@ -13,12 +13,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($company as $c)
+        @foreach ($type_solicitation as $c)
         <tr>
             <td>{{ $c->name }}</td>
-            <td><a href="{{ route('company.update', $c->id) }}">Update</a></td>
+            <td><a href="{{ route('type_solicitation.update', $c->id) }}">Update</a></td>
             <td>
-                <form action="{{ route('company.delete', $c->id) }}" method="post">
+                <form action="{{ route('type_solicitation.delete', $c->id) }}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" value="Delete">
@@ -26,14 +26,14 @@
             </td>
         </tr>
         @endforeach
-        @if (count($company) == 0)
+        @if (count($type_solicitation) == 0)
         <tr>
-            <td colspan="1">No registered company</td>
+            <td colspan="1">No registered type</td>
         </tr>
         @endif
     </tbody>
 </table>
 <div style="text-align: center">
-    {{ $company->links() }}
+    {{ $type_solicitation->links() }}
 </div>
 @endsection
