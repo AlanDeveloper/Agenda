@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/jquery.toast.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
+    @yield('styles')
     <title>Agenda</title>
 </head>
 <body>
@@ -39,5 +40,6 @@
         })
     </script>
     @endif
+    @yield('scripts')
 </body>
 </html>

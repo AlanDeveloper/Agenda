@@ -11,6 +11,7 @@
             <th>Company</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
         <tr>
             <td>{{ $e->name }}</td>
             <td>{{ $e->company_name }}</td>
+            <td><a href="{{ route('employee.schedule', $e->id) }}">View schedule</a></td>
             <td><a href="{{ route('employee.update', $e->id) }}">Update</a></td>
             <td>
                 <form action="{{ route('employee.delete', $e->id) }}" method="post">

@@ -33,6 +33,8 @@ Route::delete('/company/delete/{id}', [CompanyController::class, 'delete'])->nam
 
 Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
 Route::get('/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
+Route::get('/employee/{id}/schedule', [EmployeeController::class, 'schedule'])->name('employee.schedule');
+Route::post('/employee/{id}/schedule', [EmployeeController::class, 'schedule_save'])->name('employee.schedule_save');
 Route::post('/employee/store', [EmployeeController::class, 'save']);
 Route::get('/employee/update/{id}', [EmployeeController::class, 'update'])->name('employee.update');
 Route::put('/employee/update/{id}', [EmployeeController::class, 'save']);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Employee;
+use App\Models\Schedule;
+use App\Models\Solicitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -70,6 +72,33 @@ class EmployeeController extends Controller
         return redirect()->route('employee.index')
             ->with('header', 'Success')
             ->with('message', 'Successfully deleted')
+            ->with('status', 'success');
+    }
+
+    public function schedule($id)
+    {
+        $schedule = Schedule::where('employee_id', $id)->whereRaw(DB::raw("DATE_FORMAT(date, '%Y-%m-%d') >= subdate(curdate(), WEEKDAY(curdate()) + 1)"))->whereRaw(DB::raw("DATE_FORMAT(date, '%Y-%m-%d') < subdate(curdate(), WEEKDAY(curdate()) - 6)"))->get();
+        $solicitation = Solicitation::orderBy('title', 'asc')->get();
+        return view('employee.schedule', ['solicitation' => $solicitation, 'schedule' => $schedule]);
+    }
+
+    public function schedule_save(Request $request, $id)
+    {
+        $data = $request->all();
+        $data['employee_id'] = $id;
+        try {
+            $schedule = Schedule::create($data);
+            Schedule::createLog('schedule', $schedule->toArray(), 'POST', 'success');
+        } catch (\Exception $e) {
+            Schedule::createLog('schedule', $e->getMessage(), 'DELETE', 'error');
+            return redirect()->back()
+                ->with('header', 'Error')
+                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('status', 'error');
+        }
+        return redirect()->route('employee.schedule', $id)
+            ->with('header', 'Success')
+            ->with('message', 'Successfully created')
             ->with('status', 'success');
     }
 }
