@@ -77,8 +77,10 @@ class EmployeeController extends Controller
 
     public function schedule($id)
     {
-        $schedule = Schedule::where('employee_id', $id)->whereRaw(DB::raw("DATE_FORMAT(date, '%Y-%m-%d') >= subdate(curdate(), WEEKDAY(curdate()) + 1)"))->whereRaw(DB::raw("DATE_FORMAT(date, '%Y-%m-%d') < subdate(curdate(), WEEKDAY(curdate()) - 6)"))->get();
-        $solicitation = Solicitation::orderBy('title', 'asc')->get();
+        $schedule = Schedule::where('employee_id', $id)->whereRaw(DB::raw("DATE_FORMAT(date, '%Y-%m-%d') >= subdate(curdate(), WEEKDAY(curdate()) + 1)"));
+        $schedule = $schedule->join('solicitation', 'solicitation.id', '=', 'schedule.solicitation_id')->select('solicitation.*', 'schedule.date');
+        $schedule = $schedule->whereRaw(DB::raw("DATE_FORMAT(date, '%Y-%m-%d') < subdate(curdate(), WEEKDAY(curdate()) - 6)"))->get();
+        $solicitation = Solicitation::whereNotIn('id', Schedule::select('solicitation_id')->get()->toArray())->orderBy('title', 'asc')->get();
         return view('employee.schedule', ['solicitation' => $solicitation, 'schedule' => $schedule]);
     }
 

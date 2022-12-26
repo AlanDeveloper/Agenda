@@ -58,7 +58,7 @@
         border-top-right-radius: 10px;
     }
 
-    #modalSchedule {
+    .modalSchedule {
         display: none;
         position: absolute;
         top: 0;
@@ -69,7 +69,7 @@
         z-index: 105;
     }
 
-    #modalSchedule #formCreateOrUpdate {
+    .modalSchedule #formCreateOrUpdate {
         width: 400px;
         padding: 20px;
         background-color: #fff;
@@ -80,7 +80,7 @@
         transition: all 0.5s ease;
     }
 
-    #modalSchedule #closeModal {
+    .modalSchedule #closeModal {
         background: transparent;
         border: none;
         font-size: 2em;
@@ -111,13 +111,13 @@
             <div class="hour" style="border-top-left-radius: 10px;">{{ ($hours[$i] < 10 ? "0" . $hours[$i] : $hours[$i]) }}:00 - {{ $hours[$i] + 2 }}:00</div>
             @for ($j = 0; $j < 5; $j++)
             @php $day = date('Y-m-d ' . ($hours[$i] < 10 ? "0" . $hours[$i] : $hours[$i])  .':i:s', strtotime('+' . ($j + 1) .' days Last Sunday')); @endphp
-            <div class="body" data-day="{{ $day }}">
+            <div class="body {{ strtotime($s->date) == strtotime($day) ? 'register_schedule' : 'info_schedule' }}" data-day="{{ $day }}">
                 @php $nothing = true; @endphp
 
                 @foreach ($schedule as $s)
                 @if (strtotime($s->date) == strtotime($day))
                 @php $nothing = false; @endphp
-                <p>TEste</p>
+                <p>{{ $s->title }}</p>
                 @endif
                 @endforeach
 
@@ -130,7 +130,7 @@
     </div>
 </div>
 
-<div id="modalSchedule">
+<div class="modalSchedule" id="register_schedule_modal">
     <form method="post" id="formCreateOrUpdate">
         @csrf
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -155,18 +155,33 @@
         <input type="submit" value="Send">
     </form>
 </div>
+
+<div class="modalSchedule" id="info_schedule_modal">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <h1>Info Schedule</h1>
+        <button type="button" id="closeModal">X</button>
+    </div>
+    <div>
+        <h3></h3>
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
 <script>
     $(document).ready(function () {
-        $(".body").click(function () {
+        $(".register_schedule").click(function () {
             $("#date").val($(this).data("day").replace(' ', 'T'));
-            $("#modalSchedule").show("slow");
+            $("#register_schedule_modal").show("slow");
+        });
+
+        $(".info_schedule").click(function () {
+            $("#info_schedule_modal").show("slow");
         });
 
         $("#closeModal").click(function () {
-            $("#modalSchedule").hide("slow");
+            $(".modalSchedule").hide("slow");
         });
     });
 </script>
