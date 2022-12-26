@@ -10,18 +10,31 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.toast.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     @yield('styles')
+    @if (!auth()->user())
+    <style>
+        body {
+            grid-template-areas:
+                "body";
+            grid-template-columns: 1fr;
+        }
+    </style>
+    @endif
     <title>Agenda</title>
 </head>
 <body>
     <header>
+        @if (auth()->user())
         <h1>Home</h1>
         <button id="closeMenu"><i class="tes te-menu"></i></button>
+        @endif
     </header>
     <main>
         <div id="content">
             @yield('content')
         </div>
+        @if (auth()->user())
         @include('components.menu')
+        @endif
     </main>
     <footer>
 
